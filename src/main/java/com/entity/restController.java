@@ -15,35 +15,30 @@ import org.springframework.web.bind.annotation.RestController;
 @RestController
 public class restController {
 	@Autowired
-	public repositary repo;
+	public service s;
 
-	@GetMapping("/display")
-	public List<entity> displayEntity() {
-		return repo.findAll();
-	}
+	  @GetMapping
+	    public List<entity> displayEntities() {
+	        return s.displayEntity();
+	    }
 
-	@GetMapping("/display/{id}")
-	public Optional<entity> displayEntityById(@PathVariable int id) {
+	    @GetMapping("display/{id}")
+	    public Optional<entity> displayEntityById(@PathVariable int id) {
+	        return s.displayEntityById(id);
+	    }
 
-		return repo.findById(id);
-	}
+	    @PostMapping("/add")
+	    public entity addEntity(@RequestBody entity entity) {
+	        return s.addEntity(entity);
+	    }
 
-	@PostMapping("/add")
-	public entity addEntity(@RequestBody entity e) {
-		
-		return repo.save(e);
-	}
+	    @PutMapping("/update/{id}")
+	    public entity updateEntity(@PathVariable int id, @RequestBody entity entity) {
+	        return s.updateEntity(id, entity);
+	    }
 
-	@PutMapping("/update/{id}")
-	public entity updateEntity(@PathVariable int id, @RequestBody entity e) {
-		repo.deleteById(id);
-		return repo.save(e);
-	}
-
-	@DeleteMapping("delete/{id}")
-	public String deleteentity(@PathVariable int id) {
-	repo.deleteById(id);
-		
-		return "Successfully deletd";
-	}
+	    @DeleteMapping("/delete/{id}")
+	    public String deleteEntity(@PathVariable int id) {
+	        return s.deleteEntityById(id);
+	    }
 }
